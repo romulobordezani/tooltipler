@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Tooltipler</title>
+		<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="../src/jquery.tooltipler.js"></script>
+		<link rel="stylesheet" href="../src/jquery.tolltipler.css">
+	</head>
+	<body>
+
+		<script>
+			$( function() {
+				$( "[rel~=tooltipler]" ).tollTipler();
+			} );
+		</script>
+
+		<div  rel="tooltip" tooltipclass="black" >1</div>
+		<div title="Tooltip 2" rel="tooltipler" tooltiplerclass="black" >2</div>
+		<div title="Tooltip 3" rel="tooltipler" >3</div>
+		<div title="Tooltip 4" rel="tooltipler" tooltiplerclass="black" >4</div>
+
+	</body>
+</html>
