@@ -14,26 +14,20 @@
 		// minified (especially when both are regularly referenced in your plugin).
 
 		// Create the defaults once
-		var pluginName = "tollTipler",
+		var pluginName = "tolltipler",
 			defaults = {
 				eventsToBind: "mouseenter touchstart click",
-                customClass: 'orange'
+                customClass: 'orange',
+                counter: 0
             };
 
-		// The actual plugin constructor
+
 		function Plugin ( element, options ) {
-
 			this.element = element;
-
-			// jQuery has an extend method which merges the contents of two or
-			// more objects, storing the result in the first object. The first object
-			// is generally empty as we don't want to alter the default options for
-			// future instances of the plugin
 			this.settings = $.extend( {}, defaults, options );
 			this._defaults = defaults;
 			this._name = pluginName;
 			this.init();
-
 		}
 
 		$.extend( Plugin.prototype, {
@@ -62,86 +56,91 @@
 
 
                 $( this.element ).bind( 'mouseleave', function(e){
-                    return false;
                     $this.hide();
                 });
 
-                //tooltip.bind( 'click', remove_tooltip );
+                $( this.element ).find('.tooltipler').bind( 'click', function(e){
+                    $this.hide();
+                });
 
 			},
 
             addElement : function(){
                 var customClass = $( this.element ).attr( 'tooltiplerclass' ) != undefined ? ' ' + $( this.element ).attr( 'tooltiplerclass' ) : '' ;
-                var tooltipElement = $( '<div style="display:none;" class="tooltipler' + customClass + '" >' + $( this.element ).attr( 'title' ) + '</div>' );
-                $(this.element).append( tooltipElement );
+                var id = this.saveToolTiplerId();
+                var tooltipElement = $( '<div class="tooltipler' + customClass + '" id="' + id + '" >' + $( this.element ).attr( 'title' ) + '</div>' );
+                $('body').append( tooltipElement );
                 this.saveTitle();
             },
 
-            saveTitle: function(){
+            saveTitle : function(){
                 jQuery.data( this.element, 'title', $( this.element ).attr( 'title' ) + 'Hola' );
                 $(this.element).removeAttr( 'title' );
+            },
+
+            saveToolTiplerId : function(){
+                var uniqueId = 'tollTipler' + this._defaults.counter;
+                jQuery.data( this.element, 'toolTiplerId', uniqueId );
+                this._defaults.counter = this._defaults.counter + 1;
+                return uniqueId;
             },
 
 
             show : function(){
 
-                var tooltip = $(this.element).find('.tooltipler');
+                var tooltip = $( '#' + jQuery.data( this.element, 'toolTiplerId') );
                 var target =  $(this.element);
 
-                setTimeout ( function () {
+                if( $( window ).width() < tooltip.outerWidth() * 1.5 ){
+                    tooltip.css( 'max-width', $( window ).width() / 2 );
+                }else{
+                    tooltip.css( 'max-width', 340 );
+                }
 
-                    if( $( window ).width() < tooltip.outerWidth() * 1.5 ){
-                        tooltip.css( 'max-width', $( window ).width() / 2 );
-                    }else{
-                        tooltip.css( 'max-width', 340 );
+                var pos_left = target.offset().left + ( target.outerWidth() / 2 ) - ( tooltip.outerWidth() / 2 ),
+                    pos_top  = target.offset().top - tooltip.outerHeight() - 20;
+
+                if( pos_left < 0 ){
+                    pos_left = target.offset().left + target.outerWidth() / 2 - 20;
+                    tooltip.addClass( 'left' );
+                }else{
+                    tooltip.removeClass( 'left' );
+                }
+
+                if( pos_left + tooltip.outerWidth() > $( window ).width() ){
+                    pos_left = target.offset().left - tooltip.outerWidth() + target.outerWidth() / 2 + 20;
+                    tooltip.addClass( 'right' );
+                }else{
+                    tooltip.removeClass( 'right' );
+                }
+
+                if( pos_top < 0 ) {
+                    var pos_top  = target.offset().top + target.outerHeight();
+                    tooltip.addClass( 'top' );
+                }else{
+                    tooltip.removeClass( 'top' );
+                }
+
+                tooltip.css(
+                    {
+                        left: pos_left,
+                        top: ( pos_top + 10 )
                     }
+                );
 
-                    var pos_left = target.offset().left + ( target.outerWidth() / 2 ) - ( tooltip.outerWidth() / 2 ),
-                        pos_top  = target.offset().top - tooltip.outerHeight() - 20;
-
-                    if( pos_left < 0 ){
-                        pos_left = target.offset().left + target.outerWidth() / 2 - 20;
-                        tooltip.addClass( 'left' );
-                    }else{
-                        tooltip.removeClass( 'left' );
-                    }
-
-                    if( pos_left + tooltip.outerWidth() > $( window ).width() ){
-                        pos_left = target.offset().left - tooltip.outerWidth() + target.outerWidth() / 2 + 20;
-                        tooltip.addClass( 'right' );
-                    }else{
-                        tooltip.removeClass( 'right' );
-                    }
-
-
-                    if( pos_top < 0 ) {
-                        var pos_top  = target.offset().top + target.outerHeight();
-                        tooltip.addClass( 'top' );
-                    }else{
-                        tooltip.removeClass( 'top' );
-                    }
-
-                    tooltip
-                        .css( { left: pos_left, top: pos_top } )
-                        .stop().animate( { top: ( pos_top + 10 ), opacity: 1 }, 50 );
-
-                }, 1);
-
-                tooltip.show();
-
+                tooltip.removeClass('hide');
+                tooltip.addClass('show');
 
             },
 
             hide : function(){
-                $(this.element).find('.tooltipler').hide('fast');
-            },
 
-			yourOtherFunction: function( text ) {
+                var tooltip = $( '#' + jQuery.data( this.element, 'toolTiplerId') );
 
-				console.log( this._defaults, this.element );
+                tooltip.removeClass('show');
+                tooltip.addClass('hide');
 
-				$( this.element ).text( text );
-			}
+            }
 
 		} );
 

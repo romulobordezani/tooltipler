@@ -10,14 +10,24 @@
 
 		<script>
 			$( function() {
-				$( "[rel~=tooltipler]" ).tollTipler();
+				$( "[rel~=tooltipler]" ).tolltipler();
 			} );
 		</script>
 
-		<div  rel="tooltip" tooltipclass="black" >1</div>
-		<div title="Tooltip 2" rel="tooltipler" tooltiplerclass="black" >2</div>
-		<div title="Tooltip 3" rel="tooltipler" >3</div>
-		<div title="Tooltip 4" rel="tooltipler" tooltiplerclass="black" >4</div>
+		<div class="icon" title="Tooltip 1" rel="tooltipler"  >1</div>
+		<div class="icon" title="Tooltip 2" rel="tooltipler" tooltiplerclass="black" >2</div>
+		<div class="icon" title="Tooltip 3" rel="tooltipler" >3</div>
+		<div class="icon" title="Tooltip 4" rel="tooltipler" tooltiplerclass="black" >4</div>
+
+		<style>
+			.icon{
+				width: 30px;
+				height: 30px;
+				background: green;
+				margin : 126px;
+                float: left;
+			}
+		</style>
 
 	</body>
 </html>

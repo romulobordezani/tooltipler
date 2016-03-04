@@ -1,16 +1,148 @@
 /*============================================================================
   # ToolTipler
 ==============================================================================*/
+@-webkit-keyframes flipInX {
+
+  from {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+}
+
+@keyframes flipInX {
+  from {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+    z-index: 100;
+  }
+}
+
+.flipInX {
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  -webkit-animation-name: flipInX;
+  animation-name: flipInX;
+}
+
+
+
+
+
+@-webkit-keyframes flipOutX {
+  from {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+
+  30% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+    z-index: -10;
+  }
+}
+
+@keyframes flipOutX {
+  from {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+    opacity: 1;
+    z-index: 100;
+  }
+
+  30% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+    z-index: -10;
+  }
+}
+
+.flipOutX {
+  -webkit-animation-name: flipOutX;
+  animation-name: flipOutX;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+}
+
+
+
 .tooltipler {
   text-align: center;
   color: #111;
   background: #fff;
   position: absolute;
-  z-index: 100;
   padding: 15px;
   border: 1px solid #e67e22;
   min-height: 54px;
-  min-width: 227px; }
+  min-width: 227px;
+  opacity:0;
+}
+
   .tooltipler:after {
     width: 0;
     height: 0;
@@ -22,27 +154,66 @@
     left: 50%;
     bottom: -10px;
     margin-left: -10px;
-    -webkit-transition: all 0.5s, -webkit-transform 2s;
-    transition: all 0.5s, transform 2s; }
+  }
+
   .tooltipler.top:after {
-    border-top-color: transparent;
+    border-top: 0px solid transparent;
     border-bottom: 10px solid #e67e22;
-    top: -20px;
-    bottom: auto; }
+    top: -10px;
+    bottom: auto;
+  }
+
   .tooltipler.left:after {
     left: 10px;
-    margin: 0; }
+    margin: 0;
+  }
+
   .tooltipler.right:after {
     right: 10px;
     left: auto;
-    margin: 0; }
+    margin: 0;
+  }
+
+
   .tooltipler.black {
     color: #fff;
     background: #111;
     border: none;
     -webkit-border-radius: 5px;
-    border-radius: 5px; }
-    .tooltipler.black:after {
-      border-top: 10px solid #111; }
+    border-radius: 5px;
+  }
 
-/*# sourceMappingURL=jquery.tolltipler.css.map */
+    .tooltipler.black:after {
+      border-top: 10px solid #111;
+    }
+
+    .tooltipler.black.top:after {
+      border-top: 0px solid transparent;
+      border-bottom-color: #111;
+    }
+
+
+
+.tooltipler.show{
+
+  opacity: 1;
+  z-index: 100;
+
+  animation-duration: 0.66s;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  -webkit-animation-name: flipInX;
+  animation-name: flipInX;
+
+}
+
+.tooltipler.hide{
+  opacity: 0;
+  z-index: -10;
+  animation-duration: 0.66s;
+  -webkit-animation-name: flipOutX;
+  animation-name: flipOutX;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+
+}
